@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Article;
  
-class ArticleController extends Controller
+class BlogController extends Controller
 {
     public function index() {
-        $articles = Article::all();
+        $articles = Article::orderBy('created_at', 'desc')->get();
         return view('article.index', ['articles' => $articles]);
     }
  
@@ -22,7 +22,7 @@ class ArticleController extends Controller
         $article->body = $request->body;
         $article->save();
  
-        return view('article.store');
+        return redirect(route('blogs.index'));
     }
  
     public function edit(Request $request, $id) {
@@ -35,8 +35,7 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->body = $request->body;
         $article->save();
- 
-        return view('article.update');
+         return redirect(route('blogs.index'));
     }
  
     public function show(Request $request, $id) {
@@ -44,8 +43,10 @@ class ArticleController extends Controller
         return view('article.show', ['article' => $article]);
     }
  
-    public function delete(Request $request) {
-        Article::destroy($request->id);
-        return view('article.delete');
+    public function destroy(Article $article) {
+        \DB::transaction(function () use ($article) {
+            $article->delete();
+        });
+        return redirect(route('blogs.index'));
     }
 }
