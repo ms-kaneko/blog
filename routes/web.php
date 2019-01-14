@@ -13,7 +13,9 @@
 
 Auth::routes();
 Route::middleware('auth')->group(function () {
-Route::get('/', 'HomeController@index')->name('home');
-Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('blogs', 'BlogController');
+    Route::get('/', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::resource('blogs', 'BlogController');
+    Route::resource('account', 'AccountController');
+    Route::get('users/{user_id}', 'UsersController@index')->name('users.index');
 });

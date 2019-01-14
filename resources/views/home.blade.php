@@ -15,8 +15,8 @@
                     @endif
 
                         <a href="/blogs" class="btn btn-info w-100" onClick="document.location='/blogs';">ブログ一覧</a>
-                        <a href="/blogs" class="btn btn-warning w-100">マイページ</a>
-                        <a href="/blogs" class="btn btn-danger w-100">アカウント管理</a>
+                        <a href="/users/{{Auth::id()}}" class="btn btn-warning w-100">マイページ</a>
+                        <a href="/account/{{Auth::id()}}/edit" class="btn btn-danger w-100">アカウント管理</a>
                     </div>
                 </div>
             </div>
